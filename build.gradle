@@ -1,14 +1,14 @@
 plugins {
-    // Provide convenience executables for trying out the examples.
+    // Proporciona ejecutables convenientes para probar los ejemplos.
     id 'application'
-    // ASSUMES GRADLE 5.6 OR HIGHER. Use plugin version 0.8.10 with earlier gradle versions
+    // ASUME GRADLE 5.6 O SUPERIOR. Use la versión 0.8.18 del complemento con versiones anteriores de gradle
     id 'com.google.protobuf' version '0.8.18'
-    // Generate IntelliJ IDEA's .idea & .iml project files
+    // Genera archivos de proyecto .idea e .iml de IntelliJ IDEA
     id 'idea'
 }
 
 repositories {
-    maven { // The google mirror is less flaky than mavenCentral()
+    maven {
         url "https://maven-central.storage-download.googleapis.com/maven2/" }
     mavenCentral()
     mavenLocal()
@@ -17,12 +17,9 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-// IMPORTANT: You probably want the non-SNAPSHOT version of gRPC. Make sure you
-// are looking at a tagged version of the example and not "master"!
-
-// Feel free to delete the comment at the next line. It is just for safely
-// updating the version in our release process.
-def grpcVersion = '1.46.0' // CURRENT_GRPC_VERSION
+// IMPORTANT: Es recomendable mantener todas las versiones actualizadas, para evitar errores.
+// actualizando la versión en nuestro proceso de lanzamiento.
+def grpcVersion = '1.46.0' //
 def protobufVersion = '3.19.2'
 def protocVersion = protobufVersion
 
@@ -31,7 +28,7 @@ dependencies {
     implementation "io.grpc:grpc-stub:${grpcVersion}"
     compileOnly "org.apache.tomcat:annotations-api:6.0.53"
 
-    // examples/advanced need this for JsonFormat
+    // ejemplos/ necesita esto para JsonFormat
     implementation "com.google.protobuf:protobuf-java-util:${protobufVersion}"
 
     runtimeOnly "io.grpc:grpc-netty-shaded:${grpcVersion}"
@@ -51,7 +48,7 @@ protobuf {
     }
 }
 
-// Inform IDEs like IntelliJ IDEA, Eclipse or NetBeans about the generated code.
+// Informar a los IDE como IntelliJ IDEA, Eclipse o NetBeans sobre el código generado.
 sourceSets {
     main {
         java {
@@ -62,20 +59,6 @@ sourceSets {
 }
 
 startScripts.enabled = false
-
-task routeGuideServer(type: CreateStartScripts) {
-    mainClass = 'io.grpc.examples.routeguide.RouteGuideServer'
-    applicationName = 'route-guide-server'
-    outputDir = new File(project.buildDir, 'tmp/scripts/' + name)
-    classpath = startScripts.classpath
-}
-
-task routeGuideClient(type: CreateStartScripts) {
-    mainClass = 'io.grpc.examples.routeguide.RouteGuideClient'
-    applicationName = 'route-guide-client'
-    outputDir = new File(project.buildDir, 'tmp/scripts/' + name)
-    classpath = startScripts.classpath
-}
 
 task helloWorldServer(type: CreateStartScripts) {
     mainClass = 'io.grpc.examples.helloworld.HelloWorldServer'
