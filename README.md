@@ -1,4 +1,4 @@
-![gRPC](https://raw.githubusercontent.com/BrianRosero/helloworld-gRPC/master/recursos/descarga1.png)
+![gRPC](https://raw.githubusercontent.com/BrianRosero/helloworld-gRPC/master/recursos/grpc.png)
 
 https://docs.google.com/document/d/1x_fKTTK_laAjjZ7vZA-iJz2m7VWTCtaoTVv6nIYR8js/edit?usp=sharing
 
