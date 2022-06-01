@@ -1,21 +1,5 @@
-/*
- * Copyright 2015 The gRPC Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package io.grpc.examples.helloworld;
-
+//importamos algunas caracteristicas a utilizar
 import io.grpc.Channel;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -25,23 +9,23 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * A simple client that requests a greeting from the {@link HelloWorldServer}.
+ * Un simple cliente que solicita un saludo desde el {@link HelloWorldServer}.
  */
 public class HelloWorldClient {
   private static final Logger logger = Logger.getLogger(HelloWorldClient.class.getName());
 
   private final GreeterGrpc.GreeterBlockingStub blockingStub;
 
-  /** Construct client for accessing HelloWorld server using the existing channel. */
+  /** Construya un cliente para acceder al servidor HelloWorld usando el canal existente. */
   public HelloWorldClient(Channel channel) {
-    // 'channel' here is a Channel, not a ManagedChannel, so it is not this code's responsibility to
-    // shut it down.
+    // 'channel' aquí es un Canal, no un ManagedChannel, por lo que no es responsabilidad de este código
+    // apagarlo.
 
-    // Passing Channels to code makes code easier to test and makes it easier to reuse Channels.
+    // Pasar canales al código hace que el código sea más fácil de probar y facilita la reutilización de canales.
     blockingStub = GreeterGrpc.newBlockingStub(channel);
   }
 
-  /** Say hello to server. */
+  /** Mensaje de saludo hacia el servidor. */
   public void greet(String name) {
     logger.info("Enviando un saludo " + name + " ...");
     HelloRequest request = HelloRequest.newBuilder().setName(name).build();
@@ -49,27 +33,27 @@ public class HelloWorldClient {
     try {
       response = blockingStub.sayHello(request);
     } catch (StatusRuntimeException e) {
-      logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+      logger.log(Level.WARNING, "RPC fallo: {0}", e.getStatus());
       return;
     }
     logger.info("Saludo: " + response.getMessage());
   }
 
   /**
-   * Greet server. If provided, the first element of {@code args} is the name to use in the
-   * greeting. The second argument is the target server.
+   * Saludo al servidor. Si se proporciona, el primer elemento de {@code args} es el nombre que se utilizará en el saludo
+   * El segundo argumento es el servidor de destino.
    */
   public static void main(String[] args) throws Exception {
-    String user = "mundo";
-    // Access a service running on the local machine on port 50051
+    String user = "Cliente";
+    // Acceda a un servicio que se ejecuta en la máquina local en el puerto 50051
     String target = "localhost:50051";
-    // Allow passing in the user and target strings as command line arguments
+    // Para permitir pasar las cadenas de usuario y de destino como argumentos de línea de comando
     if (args.length > 0) {
       if ("--help".equals(args[0])) {
         System.err.println("Usage: [name [target]]");
         System.err.println("");
-        System.err.println("  name    The name you wish to be greeted by. Defaults to " + user);
-        System.err.println("  target  The server to connect to. Defaults to " + target);
+        System.err.println("  nombre El nombre con el que desea ser recibido. Predeterminado a " + user);
+        System.err.println("  destino El servidor al que conectarse. Predeterminado a " + target);
         System.exit(1);
       }
       user = args[0];
@@ -78,21 +62,21 @@ public class HelloWorldClient {
       target = args[1];
     }
 
-    // Create a communication channel to the server, known as a Channel. Channels are thread-safe
-    // and reusable. It is common to create channels at the beginning of your application and reuse
-    // them until the application shuts down.
+    // Crear un canal de comunicación con el servidor, conocido como channel. Los canales son seguros para subprocesos
+    // y reutilizable. Es común crear canales al comienzo de su aplicación y reutilizar
+    // ellos hasta que la aplicación se apague.
     ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
-        // Channels are secure by default (via SSL/TLS). For the example we disable TLS to avoid
-        // needing certificates.
+        // Los canales son seguros por defecto (a través de SSL/TLS). Para el ejemplo, deshabilitamos TLS para evitar
+            // la necesidad de certificados.
         .usePlaintext()
         .build();
     try {
       HelloWorldClient client = new HelloWorldClient(channel);
       client.greet(user);
     } finally {
-      // ManagedChannels use resources like threads and TCP connections. To prevent leaking these
-      // resources the channel should be shut down when it will no longer be used. If it may be used
-      // again leave it running.
+      // ManagedChannels usa recursos como hilos y conexiones TCP. Para evitar la fuga de estos
+      //recursos, el canal debe cerrarse cuando ya no se utilice. Si se puede usar
+      // de nuevo déjalo en ejecución.
       channel.shutdownNow().awaitTermination(5, TimeUnit.SECONDS);
     }
   }
