@@ -1,5 +1,5 @@
 RESUMEN
-![sdsfdfsdf](https://raw.githubusercontent.com/BrianRosero/helloworld-gRPC/blob/8c3f30a774e312fece6a7d6fcb00731b4ebe2023/recursos/images%20(2).jfif)
+![sdsfdfsdf](https://raw.githubusercontent.com/BrianRosero/helloworld-gRPC/recursos/images (2).jfif)
 En este informe vamos a dar una introducción a gRPC, veremos que es rpc, fortalezas y debilidades cómo se diferencia del resto de herramientas luego haremos un simple servidor y un cliente, basado en un ejemplo mediante una aplicación simple.
  
 Antes de hablar de gRPC se debe definir conceptos sobre qué es RPC, que no son nada más que llamadas de procedimiento remoto, las cuales permiten que un programa en una computadora ejecute una función de otro programa en otra computadora, de una manera en donde no tenemos que preocuparnos por la comunicación entre ambas máquinas, es decir que para nosotros cuando usamos el RPC a nivel de código es como si invocamos una función cualquiera de nuestro programa, cuando en realidad estamos ejecutando remotamente una función de otra máquina a grosso modo eso es rpc.
